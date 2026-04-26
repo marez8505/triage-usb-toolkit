@@ -1,0 +1,79 @@
+{
+  "platform": "ios",
+  "schema_version": 1,
+  "notes": "iOS triage relies on owner-supplied credentials and lawful authority. This toolkit does NOT jailbreak, bypass passcodes, or exploit iOS. The recommended path is an encrypted iTunes/Finder/libimobiledevice backup followed by analysis with MVT iOS or iLEAPP.",
+  "tools": [
+    {
+      "name": "Apple Configurator 2 / Finder / iTunes",
+      "category": "vendor_backup",
+      "platform": "ios",
+      "purpose": "Native, owner-controlled encrypted backup workflow. Encrypted backups contain richer artifacts than unencrypted ones.",
+      "official_url": "https://support.apple.com/guide/iphone/back-up-iphone-iph3ecf67d29/ios",
+      "license": "vendor",
+      "redistribution": "vendor_only_not_bundled",
+      "install_method": "manual_download",
+      "destination": "tools/ios/apple_native",
+      "checksum_url": "https://support.apple.com/",
+      "sha256_placeholder": "N/A",
+      "notes": "Document the backup encryption password in the case file. Without it, MVT/iLEAPP will be unable to decrypt the backup."
+    },
+    {
+      "name": "DB Browser for SQLite",
+      "category": "database_review",
+      "platform": "ios",
+      "purpose": "View SQLite databases inside an iOS backup (with authority).",
+      "official_url": "https://sqlitebrowser.org/",
+      "license": "MPL-2.0 / GPL-3.0",
+      "redistribution": "permitted_under_license_not_bundled",
+      "install_method": "manual_download",
+      "destination": "tools/ios/sqlitebrowser",
+      "checksum_url": "https://sqlitebrowser.org/dl/",
+      "sha256_placeholder": "REPLACE_WITH_SHA256_FROM_OFFICIAL_SITE",
+      "notes": "Install on the analyst workstation."
+    },
+    {
+      "name": "iLEAPP",
+      "category": "artifact_parsing",
+      "platform": "ios",
+      "purpose": "iOS Logs Events And Protobuf Parser — parses iOS backups and filesystem extractions into a report.",
+      "official_url": "https://github.com/abrignoni/iLEAPP",
+      "license": "MIT",
+      "redistribution": "permitted_under_license_not_bundled",
+      "install_method": "github_clone",
+      "destination": "tools/ios/ileapp",
+      "checksum_url": "https://github.com/abrignoni/iLEAPP/releases",
+      "sha256_placeholder": "REPLACE_WITH_SHA256_FROM_RELEASE_PAGE",
+      "notes": "Run on the analyst workstation against a decrypted backup or extraction."
+    },
+    {
+      "name": "libimobiledevice",
+      "category": "acquisition",
+      "platform": "ios",
+      "purpose": "Open-source library and CLI utilities (idevicebackup2, ideviceinfo, idevicepair, idevice_id) to communicate with iOS devices over USB and create backups.",
+      "official_url": "https://libimobiledevice.org/",
+      "alt_url": "https://docs.mvt.re/en/latest/ios/backup/libimobiledevice/",
+      "license": "LGPL-2.1 / GPL-2.0",
+      "redistribution": "permitted_under_license_not_bundled",
+      "install_method": "package_manager",
+      "destination": "tools/ios/libimobiledevice",
+      "checksum_url": "https://github.com/libimobiledevice/libimobiledevice/releases",
+      "sha256_placeholder": "REPLACE_WITH_SHA256_FROM_RELEASE_PAGE",
+      "notes": "On macOS use Homebrew (`brew install libimobiledevice`); on Linux use the distro package. The companion script `scripts/collect_ios_backup.sh` calls these utilities."
+    },
+    {
+      "name": "MVT (Mobile Verification Toolkit) — iOS",
+      "category": "targeted_forensics",
+      "platform": "ios",
+      "purpose": "Consensual forensic analysis of iOS backups / filesystem dumps (mvt-ios).",
+      "official_url": "https://github.com/mvt-project/mvt",
+      "alt_url": "https://docs.mvt.re/",
+      "license": "MVT_License (modified)",
+      "redistribution": "permitted_under_license_not_bundled",
+      "install_method": "pipx_or_pip",
+      "destination": "tools/ios/mvt",
+      "checksum_url": "https://github.com/mvt-project/mvt/releases",
+      "sha256_placeholder": "REPLACE_WITH_SHA256_FROM_RELEASE_PAGE",
+      "notes": "Per Amnesty International Security Lab: explicit consent / lawful authority required."
+    }
+  ]
+}

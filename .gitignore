@@ -1,0 +1,64 @@
+# Agent harness (not part of the public toolkit)
+.claude/
+.mcp.json
+CLAUDE.md
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*~
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Build / test artifacts
+build/
+dist/
+*.log
+tmp/
+temp/
+
+# Downloaded tool binaries (never commit proprietary binaries)
+tools/bin/
+tools/win/
+tools/mac/
+tools/android/
+tools/ios/
+tools/common/
+usb_layout/tools/**/*.exe
+usb_layout/tools/**/*.zip
+usb_layout/tools/**/*.dmg
+usb_layout/tools/**/*.tar.gz
+usb_layout/tools/**/*.7z
+
+# Case data (never commit evidence)
+cases/
+evidence/
+reports/
+logs/
+*.E01
+*.dd
+*.aff4
+*.plaso
+*.sqlite
+*.bak
+*.ipsw
+*.tar
+*.zip
+*backup*/
+
+# Local environment
+.env
+.env.local
+*.key
+*.pem

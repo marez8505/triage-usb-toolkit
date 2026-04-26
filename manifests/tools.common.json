@@ -1,0 +1,78 @@
+{
+  "platform": "common",
+  "schema_version": 1,
+  "notes": "Cross-platform tools and analyst-workstation utilities used across multiple device targets.",
+  "tools": [
+    {
+      "name": "Autopsy / The Sleuth Kit",
+      "category": "forensic_platform",
+      "platform": "common",
+      "purpose": "Cross-platform image analysis, keyword search, timeline, file carving.",
+      "official_url": "https://www.sleuthkit.org/autopsy/",
+      "license": "Apache-2.0 / IBM CPL",
+      "redistribution": "permitted_under_license_not_bundled",
+      "install_method": "manual_download",
+      "destination": "tools/common/autopsy",
+      "checksum_url": "https://www.sleuthkit.org/autopsy/download.php",
+      "sha256_placeholder": "REPLACE_WITH_SHA256_FROM_OFFICIAL_SITE",
+      "notes": "Used by law enforcement, military, and corporate examiners as a shared analysis environment."
+    },
+    {
+      "name": "NIST Digital Evidence resources",
+      "category": "reference",
+      "platform": "common",
+      "purpose": "Reference datasets and forensic tool testing methodology from NIST.",
+      "official_url": "https://www.nist.gov/digital-evidence",
+      "license": "public_domain_us_government_work",
+      "redistribution": "permitted",
+      "install_method": "reference_only",
+      "destination": "docs/references",
+      "checksum_url": null,
+      "sha256_placeholder": "N/A",
+      "notes": "Use NIST CFTT / CFReDS resources to validate tool behavior against reference images."
+    },
+    {
+      "name": "osquery",
+      "category": "live_response",
+      "platform": "common",
+      "purpose": "SQL-based host introspection across Windows, macOS, and Linux.",
+      "official_url": "https://osquery.io/",
+      "license": "Apache-2.0",
+      "redistribution": "permitted_under_license_not_bundled",
+      "install_method": "manual_download",
+      "destination": "tools/common/osquery",
+      "checksum_url": "https://github.com/osquery/osquery/releases",
+      "sha256_placeholder": "REPLACE_WITH_SHA256_FROM_RELEASE_PAGE",
+      "notes": "Use `osqueryi` for ad-hoc triage queries; do not deploy the daemon to a suspect host."
+    },
+    {
+      "name": "Plaso / log2timeline",
+      "category": "timeline",
+      "platform": "common",
+      "purpose": "Build cross-platform super-timelines from collected artifacts (Windows, macOS, Linux).",
+      "official_url": "https://plaso.readthedocs.io/en/latest/sources/user/Users-Guide.html",
+      "license": "Apache-2.0",
+      "redistribution": "permitted_under_license_not_bundled",
+      "install_method": "github_release",
+      "destination": "tools/common/plaso",
+      "checksum_url": "https://github.com/log2timeline/plaso/releases",
+      "sha256_placeholder": "REPLACE_WITH_SHA256_FROM_RELEASE_PAGE",
+      "notes": "Output `.plaso` storage files; analyze with `psort.py` or import to Timesketch."
+    },
+    {
+      "name": "Velociraptor offline collectors",
+      "category": "endpoint_dfir",
+      "platform": "common",
+      "purpose": "Open-source endpoint monitoring, DFIR, and cyber response platform — build single-binary offline collectors per platform.",
+      "official_url": "https://www.rapid7.com/products/velociraptor/",
+      "alt_url": "https://docs.velociraptor.app/",
+      "license": "AGPL-3.0",
+      "redistribution": "permitted_under_license_not_bundled",
+      "install_method": "github_release",
+      "destination": "tools/common/velociraptor",
+      "checksum_url": "https://github.com/Velocidex/velociraptor/releases",
+      "sha256_placeholder": "REPLACE_WITH_SHA256_FROM_RELEASE_PAGE",
+      "notes": "Build platform-specific collectors on the analyst workstation, then place each binary under tools/<platform>/velociraptor on the USB."
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "platform": "android",
+  "schema_version": 1,
+  "notes": "Android triage requires USB debugging enabled and the device owner / lawful authority's explicit consent. This toolkit does NOT bypass screen lock, root the device, or exploit vulnerabilities.",
+  "tools": [
+    {
+      "name": "Android Platform Tools (adb, fastboot)",
+      "category": "acquisition",
+      "platform": "android",
+      "purpose": "Official Google ADB / fastboot binaries. Required for any adb-based collection.",
+      "official_url": "https://developer.android.com/tools/releases/platform-tools",
+      "alt_url": "https://developer.android.com/tools/adb",
+      "license": "google_terms",
+      "redistribution": "permitted_per_google_terms_not_bundled",
+      "install_method": "manual_download",
+      "destination": "tools/android/platform-tools",
+      "checksum_url": "https://developer.android.com/tools/releases/platform-tools",
+      "sha256_placeholder": "REPLACE_WITH_SHA256_FROM_OFFICIAL_SITE",
+      "notes": "ADB is included in the SDK Platform Tools package. Always download from developer.android.com."
+    },
+    {
+      "name": "ALEAPP",
+      "category": "artifact_parsing",
+      "platform": "android",
+      "purpose": "Android Logs Events And Protobuf Parser — parses ADB / filesystem extractions into reports.",
+      "official_url": "https://github.com/abrignoni/ALEAPP",
+      "license": "MIT",
+      "redistribution": "permitted_under_license_not_bundled",
+      "install_method": "github_clone",
+      "destination": "tools/android/aleapp",
+      "checksum_url": "https://github.com/abrignoni/ALEAPP/releases",
+      "sha256_placeholder": "REPLACE_WITH_SHA256_FROM_RELEASE_PAGE",
+      "notes": "Run on the analyst workstation against the collected extraction."
+    },
+    {
+      "name": "DB Browser for SQLite",
+      "category": "database_review",
+      "platform": "android",
+      "purpose": "View SQLite databases extracted from Android (with authority).",
+      "official_url": "https://sqlitebrowser.org/",
+      "license": "MPL-2.0 / GPL-3.0",
+      "redistribution": "permitted_under_license_not_bundled",
+      "install_method": "manual_download",
+      "destination": "tools/android/sqlitebrowser",
+      "checksum_url": "https://sqlitebrowser.org/dl/",
+      "sha256_placeholder": "REPLACE_WITH_SHA256_FROM_OFFICIAL_SITE",
+      "notes": "Install on the analyst workstation; do not run on a suspect device."
+    },
+    {
+      "name": "MVT (Mobile Verification Toolkit) — Android",
+      "category": "targeted_forensics",
+      "platform": "android",
+      "purpose": "Consensual forensic analysis of Android devices (mvt-android).",
+      "official_url": "https://github.com/mvt-project/mvt",
+      "alt_url": "https://docs.mvt.re/",
+      "license": "MVT_License (modified)",
+      "redistribution": "permitted_under_license_not_bundled",
+      "install_method": "pipx_or_pip",
+      "destination": "tools/android/mvt",
+      "checksum_url": "https://github.com/mvt-project/mvt/releases",
+      "sha256_placeholder": "REPLACE_WITH_SHA256_FROM_RELEASE_PAGE",
+      "notes": "Per Amnesty International Security Lab: use only with explicit consent. Reference docs at docs.mvt.re."
+    }
+  ]
+}
