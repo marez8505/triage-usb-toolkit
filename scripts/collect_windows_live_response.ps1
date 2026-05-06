@@ -67,7 +67,7 @@ $HashFile = Join-Path $LogDir "sha256.txt"
 
 "timestamp_utc`tcommand`toutput_file`texit_code"           | Out-File -FilePath $CmdLog -Encoding utf8
 
-function Run-Logged {
+function Invoke-Logged {
     param(
         [string] $OutFile,
         [scriptblock] $Block,
@@ -85,47 +85,47 @@ function Run-Logged {
 }
 
 # --- system ---------------------------------------------------------------
-Run-Logged (Join-Path $OutDir "systeminfo.txt")        { systeminfo }                                       "systeminfo"
-Run-Logged (Join-Path $OutDir "hostname.txt")          { hostname }                                         "hostname"
-Run-Logged (Join-Path $OutDir "whoami.txt")            { whoami /all }                                      "whoami /all"
-Run-Logged (Join-Path $OutDir "os_version.txt")        { Get-CimInstance Win32_OperatingSystem | Format-List * } "os_version"
-Run-Logged (Join-Path $OutDir "computer_system.txt")   { Get-CimInstance Win32_ComputerSystem | Format-List * } "computer_system"
-Run-Logged (Join-Path $OutDir "bios.txt")              { Get-CimInstance Win32_BIOS | Format-List * }       "bios"
-Run-Logged (Join-Path $OutDir "timezone.txt")          { Get-TimeZone | Format-List * }                     "timezone"
-Run-Logged (Join-Path $OutDir "uptime.txt")            { (Get-CimInstance Win32_OperatingSystem).LastBootUpTime } "uptime"
+Invoke-Logged (Join-Path $OutDir "systeminfo.txt")        { systeminfo }                                       "systeminfo"
+Invoke-Logged (Join-Path $OutDir "hostname.txt")          { hostname }                                         "hostname"
+Invoke-Logged (Join-Path $OutDir "whoami.txt")            { whoami /all }                                      "whoami /all"
+Invoke-Logged (Join-Path $OutDir "os_version.txt")        { Get-CimInstance Win32_OperatingSystem | Format-List * } "os_version"
+Invoke-Logged (Join-Path $OutDir "computer_system.txt")   { Get-CimInstance Win32_ComputerSystem | Format-List * } "computer_system"
+Invoke-Logged (Join-Path $OutDir "bios.txt")              { Get-CimInstance Win32_BIOS | Format-List * }       "bios"
+Invoke-Logged (Join-Path $OutDir "timezone.txt")          { Get-TimeZone | Format-List * }                     "timezone"
+Invoke-Logged (Join-Path $OutDir "uptime.txt")            { (Get-CimInstance Win32_OperatingSystem).LastBootUpTime } "uptime"
 
 # --- users / sessions -----------------------------------------------------
-Run-Logged (Join-Path $OutDir "local_users.txt")       { Get-LocalUser | Format-Table -AutoSize | Out-String -Width 4096 } "Get-LocalUser"
-Run-Logged (Join-Path $OutDir "local_groups.txt")      { Get-LocalGroup | Format-Table -AutoSize | Out-String -Width 4096 } "Get-LocalGroup"
-Run-Logged (Join-Path $OutDir "logged_on_users.txt")   { query user 2>$null } "query user"
-Run-Logged (Join-Path $OutDir "user_profiles.txt")     { Get-CimInstance Win32_UserProfile | Select-Object LocalPath, SID, LastUseTime, Special | Format-Table -AutoSize | Out-String -Width 4096 } "Win32_UserProfile"
+Invoke-Logged (Join-Path $OutDir "local_users.txt")       { Get-LocalUser | Format-Table -AutoSize | Out-String -Width 4096 } "Get-LocalUser"
+Invoke-Logged (Join-Path $OutDir "local_groups.txt")      { Get-LocalGroup | Format-Table -AutoSize | Out-String -Width 4096 } "Get-LocalGroup"
+Invoke-Logged (Join-Path $OutDir "logged_on_users.txt")   { query user 2>$null } "query user"
+Invoke-Logged (Join-Path $OutDir "user_profiles.txt")     { Get-CimInstance Win32_UserProfile | Select-Object LocalPath, SID, LastUseTime, Special | Format-Table -AutoSize | Out-String -Width 4096 } "Win32_UserProfile"
 
 # --- processes ------------------------------------------------------------
-Run-Logged (Join-Path $OutDir "processes.txt")         { Get-CimInstance Win32_Process | Select-Object ProcessId, ParentProcessId, Name, CommandLine, ExecutablePath, CreationDate | Format-Table -AutoSize | Out-String -Width 8192 } "Win32_Process"
-Run-Logged (Join-Path $OutDir "processes.csv")         { Get-CimInstance Win32_Process | Select-Object ProcessId, ParentProcessId, Name, CommandLine, ExecutablePath, CreationDate | ConvertTo-Csv -NoTypeInformation } "Win32_Process csv"
+Invoke-Logged (Join-Path $OutDir "processes.txt")         { Get-CimInstance Win32_Process | Select-Object ProcessId, ParentProcessId, Name, CommandLine, ExecutablePath, CreationDate | Format-Table -AutoSize | Out-String -Width 8192 } "Win32_Process"
+Invoke-Logged (Join-Path $OutDir "processes.csv")         { Get-CimInstance Win32_Process | Select-Object ProcessId, ParentProcessId, Name, CommandLine, ExecutablePath, CreationDate | ConvertTo-Csv -NoTypeInformation } "Win32_Process csv"
 
 # --- services -------------------------------------------------------------
-Run-Logged (Join-Path $OutDir "services.txt")          { Get-CimInstance Win32_Service | Select-Object Name, DisplayName, State, StartMode, StartName, PathName | Format-Table -AutoSize | Out-String -Width 8192 } "Win32_Service"
-Run-Logged (Join-Path $OutDir "services.csv")          { Get-CimInstance Win32_Service | Select-Object Name, DisplayName, State, StartMode, StartName, PathName | ConvertTo-Csv -NoTypeInformation } "Win32_Service csv"
+Invoke-Logged (Join-Path $OutDir "services.txt")          { Get-CimInstance Win32_Service | Select-Object Name, DisplayName, State, StartMode, StartName, PathName | Format-Table -AutoSize | Out-String -Width 8192 } "Win32_Service"
+Invoke-Logged (Join-Path $OutDir "services.csv")          { Get-CimInstance Win32_Service | Select-Object Name, DisplayName, State, StartMode, StartName, PathName | ConvertTo-Csv -NoTypeInformation } "Win32_Service csv"
 
 # --- network --------------------------------------------------------------
-Run-Logged (Join-Path $OutDir "ipconfig.txt")          { ipconfig /all } "ipconfig /all"
-Run-Logged (Join-Path $OutDir "route_print.txt")       { route print }   "route print"
-Run-Logged (Join-Path $OutDir "arp.txt")               { arp -a }        "arp -a"
-Run-Logged (Join-Path $OutDir "netstat.txt")           { netstat -anob } "netstat -anob"
-Run-Logged (Join-Path $OutDir "tcp_connections.txt")   { Get-NetTCPConnection | Format-Table -AutoSize | Out-String -Width 4096 } "Get-NetTCPConnection"
-Run-Logged (Join-Path $OutDir "udp_endpoints.txt")     { Get-NetUDPEndpoint | Format-Table -AutoSize | Out-String -Width 4096 } "Get-NetUDPEndpoint"
-Run-Logged (Join-Path $OutDir "dns_cache.txt")         { ipconfig /displaydns } "ipconfig /displaydns"
-Run-Logged (Join-Path $OutDir "smb_shares.txt")        { Get-SmbShare | Format-Table -AutoSize | Out-String -Width 4096 } "Get-SmbShare"
-Run-Logged (Join-Path $OutDir "smb_sessions.txt")      { Get-SmbSession | Format-Table -AutoSize | Out-String -Width 4096 } "Get-SmbSession"
-Run-Logged (Join-Path $OutDir "firewall_profiles.txt") { Get-NetFirewallProfile | Format-List * } "Get-NetFirewallProfile"
+Invoke-Logged (Join-Path $OutDir "ipconfig.txt")          { ipconfig /all } "ipconfig /all"
+Invoke-Logged (Join-Path $OutDir "route_print.txt")       { route print }   "route print"
+Invoke-Logged (Join-Path $OutDir "arp.txt")               { arp -a }        "arp -a"
+Invoke-Logged (Join-Path $OutDir "netstat.txt")           { netstat -anob } "netstat -anob"
+Invoke-Logged (Join-Path $OutDir "tcp_connections.txt")   { Get-NetTCPConnection | Format-Table -AutoSize | Out-String -Width 4096 } "Get-NetTCPConnection"
+Invoke-Logged (Join-Path $OutDir "udp_endpoints.txt")     { Get-NetUDPEndpoint | Format-Table -AutoSize | Out-String -Width 4096 } "Get-NetUDPEndpoint"
+Invoke-Logged (Join-Path $OutDir "dns_cache.txt")         { ipconfig /displaydns } "ipconfig /displaydns"
+Invoke-Logged (Join-Path $OutDir "smb_shares.txt")        { Get-SmbShare | Format-Table -AutoSize | Out-String -Width 4096 } "Get-SmbShare"
+Invoke-Logged (Join-Path $OutDir "smb_sessions.txt")      { Get-SmbSession | Format-Table -AutoSize | Out-String -Width 4096 } "Get-SmbSession"
+Invoke-Logged (Join-Path $OutDir "firewall_profiles.txt") { Get-NetFirewallProfile | Format-List * } "Get-NetFirewallProfile"
 
 # --- scheduled tasks ------------------------------------------------------
-Run-Logged (Join-Path $OutDir "scheduled_tasks.txt")   { Get-ScheduledTask | Select-Object TaskPath, TaskName, State, Author, Description | Format-Table -AutoSize | Out-String -Width 8192 } "Get-ScheduledTask"
-Run-Logged (Join-Path $OutDir "scheduled_tasks.csv")   { Get-ScheduledTask | Select-Object TaskPath, TaskName, State, Author, Description | ConvertTo-Csv -NoTypeInformation } "Get-ScheduledTask csv"
+Invoke-Logged (Join-Path $OutDir "scheduled_tasks.txt")   { Get-ScheduledTask | Select-Object TaskPath, TaskName, State, Author, Description | Format-Table -AutoSize | Out-String -Width 8192 } "Get-ScheduledTask"
+Invoke-Logged (Join-Path $OutDir "scheduled_tasks.csv")   { Get-ScheduledTask | Select-Object TaskPath, TaskName, State, Author, Description | ConvertTo-Csv -NoTypeInformation } "Get-ScheduledTask csv"
 
 # --- installed software ---------------------------------------------------
-Run-Logged (Join-Path $OutDir "installed_uninstall.txt") {
+Invoke-Logged (Join-Path $OutDir "installed_uninstall.txt") {
     $paths = @(
         "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*",
         "HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*"
@@ -143,7 +143,7 @@ $AutorunPaths = @(
     "$env:ProgramData\Microsoft\Windows\Start Menu\Programs\Startup",
     "C:\Windows\System32\drivers\etc"
 )
-Run-Logged (Join-Path $OutDir "autorun_paths_listing.txt") {
+Invoke-Logged (Join-Path $OutDir "autorun_paths_listing.txt") {
     foreach ($p in $AutorunPaths) {
         Write-Output "## $p"
         if (Test-Path -LiteralPath $p) {
@@ -164,7 +164,7 @@ $ArtifactDirs = @(
     "C:\Windows\AppCompat\Programs",
     "C:\Windows\Temp"
 )
-Run-Logged (Join-Path $OutDir "artifact_listings.txt") {
+Invoke-Logged (Join-Path $OutDir "artifact_listings.txt") {
     foreach ($p in $ArtifactDirs) {
         Write-Output "## $p"
         if (Test-Path -LiteralPath $p) {
@@ -179,7 +179,7 @@ Run-Logged (Join-Path $OutDir "artifact_listings.txt") {
 } "artifact directory listings"
 
 # --- USB / connected device history (registry, read-only) ----------------
-Run-Logged (Join-Path $OutDir "usb_devices_registry.txt") {
+Invoke-Logged (Join-Path $OutDir "usb_devices_registry.txt") {
     $keys = @(
         "HKLM:\SYSTEM\CurrentControlSet\Enum\USB",
         "HKLM:\SYSTEM\CurrentControlSet\Enum\USBSTOR"
